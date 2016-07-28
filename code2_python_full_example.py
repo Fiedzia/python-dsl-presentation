@@ -37,6 +37,6 @@ def dsl_to_func(code_str):
 
 if __name__ == '__main__':
     dsl_str = '"python" and ("developer" or "programmer")'
-    func = dsl_to_func(dsl_str)
-    print(func('python developer'))
-    print(func('java developer'))
+    pyfunc = dsl_to_func(dsl_str)
+    print(pyfunc('python developer'))
+    print(pyfunc('java developer'))

@@ -83,10 +83,12 @@ Maciej Dziardziel (fiedzia@gmail.com)
 
 * It just works
 * Full power of Python
+* Good error messages
 
 ## Cons:
 
 * Full power of Python...
+* Error messages understandable ... if you understan python
 * Users (who are not developers) will need to understand enormous amount of Python concepts
 * Code is tied to single implementation, its variables and datastructures
 * Code is hard to analyze and modify
@@ -225,6 +227,15 @@ namespace = {}
 return eval(compiled, namespace)
 
 ~~~~
+!SLIDE
+
+## Full example
+
+## Given arbitrary string like ' "python" and ("developer" or "programmer") '
+
+## Generate python function that takes a string and return true if it matches our rules, false otherwise
+
+code2_python_full_example.py
 
 !SLIDE
 
@@ -239,9 +250,64 @@ return eval(compiled, namespace)
 * Python AST is too complex or too low-level for many needs
 * We are limited by python syntax
 
-!SLIDE
+
+!SLIDE left
 
 ## Version 3: let's use parser generator
+
+What we want:
+
+* Arbitrary syntax
+* Arbitrary AST Node types
+
+
+!SLIDE left
+
+## What parser generator provide us:
+
+* Language to define our DSL (usually its own DSL)
+* Parser for our DSL
+* Helper tools (debugging, visualisation)
+
+!SLIDE
+
+## Parser generators for Python 
+
+https://wiki.python.org/moin/LanguageParsing
+
+
+!SLIDE left
+
+## Apreggo
+
+http://igordejanovic.net/Arpeggio/
+
+* Works with python3
+* Well maintened
+* Well documented
+* Easy to use
+* Good debugging tools
+
+
+!SLIDE
+
+## DSL definition - calculator
+
+~~~{python}
+number = r'\d*\.\d*|\d+'
+factor = ("+" / "-")?
+          (number / "(" expression ")")
+term = factor (( "*" / "/") factor)*
+expression = term (("+" / "-") term)*
+calc = expression+ EOF
+~~~
+
+
+!SLIDE
+## Generated AST
+!["2*(3+4)"](./img/calc_ast.png "2*(3+4)")
+
+!SLIDE left
 
 ## Version 4: ANTLR
 
