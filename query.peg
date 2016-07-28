@@ -1,0 +1,12 @@
+# Calc grammar in clean PEG language
+
+phrase = r'"[a-z]*"'
+negation = r'not'
+factor =  (phrase / "(" expression ")")
+neg_factor = negation factor
+
+term = (factor/neg_factor) ( "and"  (factor / neg_factor))*
+neg_term = negation term
+expression = (term / neg_term) ("or" (term / neg_term))*
+neg_expression = negation expression
+query = (expression/ neg_expression)+ EOF
