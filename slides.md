@@ -302,12 +302,18 @@ expression = term (("+" / "-") term)*
 calc = expression+ EOF
 ~~~
 
-
 !SLIDE
 
 ## Generated AST for "2*(3+4)"
 
 !["calc_ast"](./img/calc_ast.png "calc_ast")
+
+
+!SLIDE
+
+## Using AST
+
+code3_arpeggio_calc.py
 
 !SLIDE left
 
