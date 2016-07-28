@@ -23,26 +23,27 @@ Maciej Dziardziel (fiedzia@gmail.com)
 * HTML
 * CSS
 * SQL
+* Django ORM
 * Programming languages
 
-(programming languages are out of scope of this presentation, but you can use all the tools we discuss today to build and process them)
+(programming languages are out of scope of this presentation, but you can use the tools we discuss today to design and process them)
 
 !SLIDE left
 
 ## Reasons to create your own DSL and related tools:
 
-* Provide easy to understand way of encoding domain-specific-knowledge
-* You  work people not familiar with programming languges
+* Provide easy to understand/write/process way of encoding domain-specific-knowledge
+* You work with people not familiar with programming languages
 * programming languge you are using is not suitable to work with given domain
-* You want to process existing DSL
+* You want to process existing code for some DSL in a way no existing tool supports
 
 !SLIDE left
 
 ## My motivation
 
 * There are many job types, every type has its own terminology and concepts
-* We needed a way to write down this knowledge to build set of job categories and assing them to jobs
-* People who have this knowledge are not developers, so they needed simplified tools they can work with easily
+* We needed a way to write down this knowledge to build set of job categories and assign them to jobs
+* People who have this knowledge are not developers, so they needed simple tools they can work with easily
 * We decided to create set of rules, where each rule may define conditions and actions
 * rule may contain arbitrarily complex conditions
 
@@ -54,7 +55,7 @@ Maciej Dziardziel (fiedzia@gmail.com)
     Conditions:
         title "python" and ("developer" or "programmer")
     Actions:
-        add label "it/developers/python"
+        add category "it/developers/python"
 ~~~~
 
 
@@ -64,7 +65,7 @@ Maciej Dziardziel (fiedzia@gmail.com)
 
 * parse this text into form usable in python
 * generate Python code for it
-* ensure rules are valid according to grammar of our DSL
+* ensure rules are valid according to definition of our DSL
 
 !SLIDE
 
@@ -74,7 +75,6 @@ Maciej Dziardziel (fiedzia@gmail.com)
 ~~~~{python}
     if "python" in job.title and ("developer" in job.title or "programmer" in job.title):
         job.labels.add("it/developers/python")
-    
 ~~~~
 
 !SLIDE left
@@ -100,12 +100,12 @@ Maciej Dziardziel (fiedzia@gmail.com)
 ## Let's see what Python really did for us:
 
 ~~~~{python}
+    #cat code1_python_function.py
 
     def is_it_python_job(job):
 
         if "python" in job.title and ("developer" in job.title or "programmer" in job.title):
             job.labels.add("it/developers/python")
-    
 ~~~~
 
 
@@ -212,6 +212,7 @@ class ASTConvertStrToCall(ast.NodeTransformer):
               ast.Call(
                   func=ast.Name(id='contains', ctx=ast.Load()),
                   args=[ast.Str(node.s)],
+                  keywords=[]
               ),
               node
           )
@@ -220,17 +221,23 @@ parsed = ast.parse(expr_str, '<rule>', 'eval')
 tree = ASTConvertStrToCall().visit(parsed)
 ast.fix_missing_locations(tree)
 compiled = compile(tree, "<rule>", "eval")
+namespace = {}
 return eval(compiled, namespace)
-
 
 ~~~~
 
 !SLIDE
 
+## Benefits:
+
+* We can reduce risk of running arbitrary code (but getting it right may be hard)
+* We can use simple syntax and transform AST nodes into desired form
+
 ## Main problems
 
-* Python AST can be used to beuild DSL's using subset of python
+* We are still dealing with python code
 * Python AST is too complex or too low-level for many needs
+* We are limited by python syntax
 
 !SLIDE
 
@@ -244,6 +251,7 @@ return eval(compiled, namespace)
 ## Links
 
 * [This presentation](http://)
+* [Arpeggio](http://igordejanovic.net/Arpeggio/)
 * [ANTLR](www.antlr.org)
 * [List of parser generators for Python](https://wiki.python.org/moin/LanguageParsing)
 
