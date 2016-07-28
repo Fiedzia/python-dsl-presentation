@@ -278,7 +278,7 @@ https://wiki.python.org/moin/LanguageParsing
 
 !SLIDE left
 
-## Apreggo
+## Arpeggio
 
 http://igordejanovic.net/Arpeggio/
 
