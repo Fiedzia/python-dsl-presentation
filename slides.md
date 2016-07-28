@@ -304,8 +304,10 @@ calc = expression+ EOF
 
 
 !SLIDE
-## Generated AST
-!["2*(3+4)"](./img/calc_ast.png "2*(3+4)")
+
+## Generated AST for "2*(3+4)"
+
+!["calc_ast"](./img/calc_ast.png "calc_ast")
 
 !SLIDE left
 
