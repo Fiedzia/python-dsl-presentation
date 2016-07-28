@@ -1,6 +1,7 @@
 from arpeggio.cleanpeg import ParserPEG
 from arpeggio import visit_parse_tree, PTNodeVisitor
 
+
 class CalcVisitor(PTNodeVisitor):
 
     def visit_number(self, node, children):

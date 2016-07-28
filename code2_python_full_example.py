@@ -17,7 +17,7 @@ class ASTConvertStrToCall(ast.NodeTransformer):
 
 def dsl_to_func(code_str):
     """
-    Convert string into python function 
+    Convert string into python function
     """
 
     parsed = ast.parse(code_str, '<rule>', 'eval')
@@ -29,11 +29,9 @@ def dsl_to_func(code_str):
         namespace = {
             'contains': lambda kw: kw in title
         }
-    
+
         return eval(compiled, namespace)
     return func
-
-
 
 if __name__ == '__main__':
     dsl_str = '"python" and ("developer" or "programmer")'

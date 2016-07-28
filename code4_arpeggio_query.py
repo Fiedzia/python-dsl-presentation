@@ -1,8 +1,8 @@
 from arpeggio.cleanpeg import ParserPEG
 from arpeggio import visit_parse_tree, PTNodeVisitor
 
-class QueryVisitor(PTNodeVisitor):
 
+class QueryVisitor(PTNodeVisitor):
 
     def __init__(self, *args, **kwargs):
 
@@ -14,7 +14,6 @@ class QueryVisitor(PTNodeVisitor):
 
     def visit_neg_phrase(self, node, children):
         return node.value.replace('"', '') not in self.title
-
 
     def visit_factor(self, node, children):
         if len(children) == 1:
@@ -31,7 +30,6 @@ class QueryVisitor(PTNodeVisitor):
         elif len(children) == 4:
             return not children[2]
 
-
     def visit_term(self, node, children):
         if len(children) == 1:
             return children[0]
@@ -43,7 +41,6 @@ class QueryVisitor(PTNodeVisitor):
             return not children[1]
         else:
             return not all(children)
-
 
     def visit_expression(self, node, children):
         if len(children) == 1:
@@ -71,4 +68,3 @@ if __name__ == '__main__':
     print(result)
     result = visit_parse_tree(parse_tree, QueryVisitor(debug=debug, title='java developer'))
     print(result)
-

@@ -1,5 +1,3 @@
-# Calc grammar in clean PEG language
-
 phrase = r'"[a-z]*"'
 negation = r'not'
 factor =  (phrase / "(" expression ")")

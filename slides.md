@@ -23,6 +23,7 @@ Maciej Dziardziel (fiedzia@gmail.com)
 * HTML
 * CSS
 * SQL
+* Regular expressions
 * Django ORM
 * Programming languages
 
@@ -64,8 +65,8 @@ Maciej Dziardziel (fiedzia@gmail.com)
 ## Now, how do I...
 
 * parse this text into form usable in python
-* generate Python code for it
 * ensure rules are valid according to definition of our DSL
+* compile it to Python bytecode for efficient execution
 
 !SLIDE
 
@@ -74,7 +75,7 @@ Maciej Dziardziel (fiedzia@gmail.com)
 
 ~~~~{python}
     if "python" in job.title and ("developer" in job.title or "programmer" in job.title):
-        job.labels.add("it/developers/python")
+        job.categories.add("it/developers/python")
 ~~~~
 
 !SLIDE left
@@ -315,20 +316,46 @@ calc = expression+ EOF
 
 code3_arpeggio_calc.py
 
+!SLIDE 
+
+## Going back to our first example
+
+"python" and ("developer" or "programmer")
+
+~~~{python}
+phrase = r'"[a-z]*"'
+negation = r'not'
+factor =  (phrase / "(" expression ")")
+neg_factor = negation factor
+
+term = (factor/neg_factor) ( "and"  (factor / neg_factor))*
+neg_term = negation term
+expression = (term / neg_term) ("or" (term / neg_term))*
+neg_expression = negation expression
+query = (expression/ neg_expression)+ EOF
+~~~
+
+!SLIDE
+
+See code4_arpeggio_query.py
+
 !SLIDE left
 
-## Version 4: ANTLR
+## Summary:
+
+* we know how to define grammar of our DSL
+* we can create a parser that will build AST for us (failing for invalid input)
+* We can inspect and transform AST to build new one or to extract desired information
 
 
 !SLIDE
 
 ## Links
 
-* [This presentation](http://)
+* [This presentation](https://github.com/Fiedzia/python-dsl-presentation)
 * [Arpeggio](http://igordejanovic.net/Arpeggio/)
-* [ANTLR](www.antlr.org)
+* [ANTLR](http://www.antlr.org)
 * [List of parser generators for Python](https://wiki.python.org/moin/LanguageParsing)
-
 
 
 !SLIDE
